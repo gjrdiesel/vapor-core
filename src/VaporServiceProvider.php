@@ -23,7 +23,9 @@ class VaporServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->ensureRoutesAreDefined();
+        if (($_ENV['DISABLE_STORAGE_ROUTE'] ?? 'true') !== 'true') {
+            $this->ensureRoutesAreDefined();
+        }
 
         if (($_ENV['VAPOR_SERVERLESS_DB'] ?? null) === 'true') {
             Schema::defaultStringLength(191);
